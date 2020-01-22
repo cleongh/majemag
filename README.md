@@ -1,5 +1,7 @@
 # Majemag en Complutum
 
+[Se puede probar el juego en un navegador](https://clnznr.github.io/majemag/)
+
 ## Objetivos
 
 - Que se muevan un poco y salgan a la calle de vez en cuando
