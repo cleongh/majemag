@@ -1136,7 +1136,7 @@ const animaciones = {}
 
 // eslint-disable-next-line no-unused-vars
 function preload() {
-  const url = '/media/user621461af90'
+  const url = 'media/user621461af90'
 
   function eliminaEnemigo(p) {
     p.habitacion.eliminarEnemigo(p)
