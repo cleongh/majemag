@@ -62,11 +62,18 @@ La paleta es "aurora" de [Lospec](https://lospec.com/palette-list/aurora)
 
 # TODO
 
-- [x] Motor de animaciones
 - [ ] Transiciones suaves entre pantallas
 - [ ] Transiciones/animaciones de morir enemigo
 - [ ] Transiciones/animaciones de atacar
-- [x] Hacer que los magos disparen mejor (más frecuencia o como sea)
 - [ ] Textos
-- [x] Decidir y planear arte
 - [ ] Comprobar que los jugadores se pintan los últimos
+- [ ] Tamaño de puertas y muros correspondientes
+- [ ] Animación dragón
+- [ ] Animación mago
+- [ ] Animación luchador
+- [ ] Animación fantasma
+- [ ] Probabilidades de generación de habitaciones
+- [ ] Solucionar y depurar la identificación de blobs
+- [x] Decidir y planear arte
+- [x] Hacer que los magos disparen mejor (más frecuencia o como sea)
+- [x] Motor de animaciones

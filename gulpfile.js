@@ -26,8 +26,8 @@ function mediaDir(cb) {
   fs.mkdir(docs, { recursive: true }, cb);
 }
 
-exports.default = series(mediaDir, parallel(animadas, imagenes))
+exports.default = series(mediaDir, parallel(imagenes, animadas))
 
-exports.watch = function () {
+exports.watch = series(exports.default, function () {
   watch([animated, images], exports.default)
-}
+})
