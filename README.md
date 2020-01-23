@@ -62,12 +62,12 @@ La paleta es "aurora" de [Lospec](https://lospec.com/palette-list/aurora)
 
 # TODO
 
-- [ ] Transiciones suaves entre pantallas
+- [x] Transiciones suaves entre pantallas
 - [ ] Transiciones/animaciones de morir enemigo
 - [ ] Transiciones/animaciones de atacar
 - [ ] Textos
 - [ ] Comprobar que los jugadores se pintan los últimos
-- [ ] Tamaño de puertas y muros correspondientes
+- [x] Tamaño de puertas y muros correspondientes
 - [ ] Animación dragón
 - [ ] Animación mago
 - [ ] Animación luchador
