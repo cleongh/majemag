@@ -412,6 +412,7 @@ class Lucha extends Persona {
    */
   constructor(habitacion, x, y) {
     super(habitacion, 'lucha', x, y)
+
   }
 
   disparar() {
@@ -714,8 +715,11 @@ class Habitacion {
     this.puertas.add(puerta)
   }
 
-  /** @param {TipoPuertaConcreta[]} puertas */
-  constructor(...puertas) {
+  /** @param {TipoPuertaConcreta[]} puertas 
+   * @param {number} quedan
+  */
+
+  constructor(quedan, ...puertas) {
     /** @type {Set<Persona>} */ this.personas = new Set()
     /** @type {Set<Arma>} */ this.armas = new Set()
     /** @type {Set<Enemigo>} */ this.enemigos = new Set()
@@ -729,17 +733,19 @@ class Habitacion {
     this.habitacionesDesdeMajemag = 0
 
     /** @type {Transicion} */ this.transicion = null
+
+    this.quedanParaLucha = quedan
   }
 
   elegirHabitacion() {
-    return random([LuchaFinal, PulsadorFantasma, FantasmasBloqueo, FantasmasLimpieza])
+    return (this.quedanParaLucha < 0 && random() > 0.5) ? LuchaFinal : random(Habitacion.habitacionesMedio)
   }
 
   /** @param {typeof Puerta} desde */
   siguiente(desde) {
     this.transicion = {
       entrando: false, porcentaje: 0, cb: () => {
-        Habitacion.habitacionActual = new (this.elegirHabitacion())(desde)
+        Habitacion.habitacionActual = new (this.elegirHabitacion())(this.quedanParaLucha, desde)
         Habitacion.habitacionActual.transicion = {
           entrando: true, porcentaje: 0, cb: () => {
             Habitacion.habitacionActual.transicion = null
@@ -821,16 +827,8 @@ class Habitacion {
    */
   persona(persona) {
     this.anadir(persona)
-    // const p = this.anadir(i => persona(i))
     this.personas.add(persona)
   }
-
-  /**
-   * @param {TipoPuertaConcreta} desde
-   */
-  // static menosDesde(desde) {
-  //   return Habitacion.subconjunto(desde)//.filter(p => p !== desde)
-  // }
 
   static subconjuntoMenos(desde) {
     let candidatos = Habitacion.puertas.filter(p => p !== desde)
@@ -844,6 +842,8 @@ class Habitacion {
     return ret
   }
 }
+
+Habitacion.minimasHastaLucha = 6
 Habitacion.anchoMuro = 10
 Habitacion.ancho = 192
 Habitacion.alto = 157
@@ -853,20 +853,12 @@ Habitacion.habitacionActual = null
 Habitacion.tiempoTransicion = 500
 Habitacion.puertas = [Izquierda, Derecha, Arriba]
 
-
-
-// eslint-disable-next-line no-unused-vars
-// class Vacia extends Habitacion {
-//   constructor() {
-//     super(...Habitacion.puertas)
-//   }
-// }
-
 class LuchaFinal extends Habitacion {
   constructor() {
-    super(Arriba)
+    super(Habitacion.minimasHastaLucha, Arriba)
     this.bloquearPuertas()
     this.dragon()
+    this.quedanParaLucha = Habitacion.minimasHastaLucha
   }
 
   limpiada() {
@@ -876,36 +868,9 @@ class LuchaFinal extends Habitacion {
   }
 }
 
-// class Pasillo extends Habitacion {
-// }
-
-// class Esquina extends Habitacion {
-//   /** @param {typeof Puerta} desde */
-//   constructor(desde) {
-//     switch (desde) {
-//       case Izquierda:
-//         super(Arriba)
-//         break
-//       case Derecha:
-//         super(Arriba)
-//         break
-//       default:
-//         super(random([Izquierda, Derecha]))
-//         break
-//     }
-//   }
-// }
-
-// class Distribuidor extends Habitacion {
-//   constructor() {
-//     super(Izquierda, Derecha, Arriba)
-//   }
-// }
-
 class PulsadorFantasma extends Habitacion {
-  constructor(desde) {
-    super(...Habitacion.subconjuntoMenos(desde))
-    // super(Izquierda, Derecha)
+  constructor(quedan, desde) {
+    super(quedan - 1, ...Habitacion.subconjuntoMenos(desde))
     this.generadorEnemigo(Habitacion.ancho / 2 - Pulsador.anchoPulsador / 2, 50)
   }
 }
@@ -914,8 +879,8 @@ class FantasmasLimpieza extends Habitacion {
   /**
      * @param {TipoPuertaConcreta} desde
      */
-  constructor(desde) {
-    super(...Habitacion.subconjuntoMenos(desde))
+  constructor(quedan, desde) {
+    super(quedan - 1, ...Habitacion.subconjuntoMenos(desde))
     this.bloquearPuertas()
     this.algunosFantasmasRandom(1, 3)
   }
@@ -929,13 +894,16 @@ class FantasmasBloqueo extends Habitacion {
   /**
      * @param {TipoPuertaConcreta} desde
      */
-  constructor(desde) {
-    super(...Habitacion.subconjuntoMenos(desde))
+  constructor(quedan, desde) {
+    super(quedan - 1, ...Habitacion.subconjuntoMenos(desde))
     this.bloquearPuertas()
     this.abridorPuertas(Habitacion.ancho / 2 - Pulsador.anchoPulsador / 2, 100)
     this.algunosFantasmasRandom(1, 2)
   }
 }
+
+/** @type {typeof Habitacion[]} */
+Habitacion.habitacionesMedio = [PulsadorFantasma, FantasmasBloqueo, FantasmasLimpieza]
 
 // eslint-disable-next-line no-unused-vars
 function setup() {
@@ -947,8 +915,7 @@ function setup() {
   // @ts-ignore
   api.tracking.connect()
 
-  // Habitacion.habitacionActual = new PulsadorFantasma()
-  Habitacion.habitacionActual = new LuchaFinal()
+  Habitacion.habitacionActual = new (random(Habitacion.habitacionesMedio))(10) //  new LuchaFinal()
 }
 
 const imagenes = {}
@@ -1021,8 +988,6 @@ function preload() {
 
 // eslint-disable-next-line no-unused-vars
 function draw() {
-  // background(paleta[0])
-
   // La división en otra función es para reutilizar el proxy sin cambios
   pintarHabitacion()
 }

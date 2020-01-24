@@ -1,6 +1,6 @@
 # Majemag en Complutum
 
-[Se puede probar el juego en un navegador](https://clnznr.github.io/majemag/)
+[Se puede probar el juego en un navegador](https://clnznr.github.io/majemag/).
 
 ## Objetivos
 
@@ -62,18 +62,27 @@ La paleta es "aurora" de [Lospec](https://lospec.com/palette-list/aurora)
 
 # TODO
 
-- [x] Transiciones suaves entre pantallas
-- [ ] Transiciones/animaciones de morir enemigo
-- [ ] Transiciones/animaciones de atacar
+- [ ] Fuente
 - [ ] Textos
 - [ ] Comprobar que los jugadores se pintan los últimos
-- [x] Tamaño de puertas y muros correspondientes
+- [ ] Animación palanca
 - [ ] Animación dragón
+- [ ] Animación morir dragón
 - [ ] Animación mago
 - [ ] Animación luchador
 - [ ] Animación fantasma
-- [ ] Probabilidades de generación de habitaciones
+- [ ] Animación morir fantasma
+- [ ] Que se vea el disparo aunque colisione encima
+- [ ] Mejorar el dibujo de puertas (marco)
 - [ ] Solucionar y depurar la identificación de blobs
+- [ ] Arte UCM
+- [ ] Probar MLP
+- [ ] ¿Depurar cámara?
 - [x] Decidir y planear arte
 - [x] Hacer que los magos disparen mejor (más frecuencia o como sea)
 - [x] Motor de animaciones
+- [x] Tamaño de puertas y muros correspondientes
+- [x] Transiciones suaves entre pantallas
+- [x] Probabilidades de generación de habitaciones
+
+
