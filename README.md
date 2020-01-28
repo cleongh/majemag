@@ -22,7 +22,7 @@ Habrá 2 tipos de personaje: lucha, magia (analogía con programador y artista).
 
 La idea del juego en la pantalla es que actúe como reconocimiento (no único) a los participantes que colaboren más con otros. Colaborar mejorará la experiencia de juego gracias al reconociento de los compañeros de *jam*. Así, se gamifica un poco el proceso y anima a todos a colaborar.
 
-Así, se podrá reconocer, metiante tuits con el hashtag `#majemag`, la colaboración. Es estos tuits tendrá que aparecer Majemag derrotado idealmente, y aparecerá explícitamente el participante reconocido en el texto. Sólo un reconocimiento por tuit.
+Así, se podrá reconocer, mediante tuits con los hashtags/menciones "@informaticaucm #GGJ20Madrid #GGJ20", la colaboración. Es estos tuits tendrá que aparecer Majemag derrotado idealmente, y aparecerá explícitamente el participante reconocido en el texto. Sólo un reconocimiento por tuit.
 
 El participante podrá decidir cómo se le cita (idealmente con su nombre en Twitter), para mantener, si quiere, el anonimato.
 
@@ -60,10 +60,13 @@ El fondo será oscuro (casi negro) para evitar emisiones muy exageradas.
 
 La paleta es "aurora" de [Lospec](https://lospec.com/palette-list/aurora)
 
+La fuente es ["Orange Kid"](http://typodermicfonts.com/orange-kid/)
+
 # TODO
 
-- [ ] Fuente
-- [ ] Textos
+- [x] Fuente
+- [x] Hacer que transición sea pixel art (o como en zelda)
+- [x] Textos
 - [ ] Comprobar que los jugadores se pintan los últimos
 - [ ] Animación palanca
 - [ ] Animación dragón
@@ -72,9 +75,9 @@ La paleta es "aurora" de [Lospec](https://lospec.com/palette-list/aurora)
 - [ ] Animación luchador
 - [ ] Animación fantasma
 - [ ] Animación morir fantasma
-- [ ] Que se vea el disparo aunque colisione encima
+- [x] Que se vea el disparo aunque colisione encima
 - [ ] Mejorar el dibujo de puertas (marco)
-- [ ] Solucionar y depurar la identificación de blobs
+- [x] Solucionar y depurar la identificación de blobs
 - [ ] Arte UCM
 - [ ] Probar MLP
 - [ ] ¿Depurar cámara?

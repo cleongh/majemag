@@ -19,14 +19,21 @@ function animadas() {
 function imagenes() {
   return src(images)
     .pipe(changed(docs, { extension: `.${outext}` }))
-    .pipe(exec(`${krita} --export --export-filename ${docs}<%= file.stem %>.${outext} <%= file.relative %>`))
+    .pipe(exec(`${krita} --export <%= file.relative %> --export-filename ${docs}<%= file.stem %>.${outext}`))
 }
+
+function fuentes() {
+  return src('tipoletra.ttf')
+    .pipe(changed(docs))
+    .pipe(dest(docs))
+}
+
 
 function mediaDir(cb) {
   fs.mkdir(docs, { recursive: true }, cb);
 }
 
-exports.default = series(mediaDir, parallel(imagenes, animadas))
+exports.default = series(mediaDir, parallel(imagenes, animadas, fuentes))
 
 exports.watch = series(exports.default, function () {
   watch([animated, images], exports.default)
