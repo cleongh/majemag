@@ -22,18 +22,20 @@ function imagenes() {
     .pipe(exec(`${krita} --export <%= file.relative %> --export-filename ${docs}<%= file.stem %>.${outext}`))
 }
 
-function fuentes() {
-  return src('tipoletra.ttf')
-    .pipe(changed(docs))
-    .pipe(dest(docs))
-}
+// function fuentes() {
+//   return src('tipoletra.ttf')
+//     .pipe(changed(docs))
+//     .pipe(dest(docs))
+// }
 
 
 function mediaDir(cb) {
   fs.mkdir(docs, { recursive: true }, cb);
 }
 
-exports.default = series(mediaDir, parallel(imagenes, animadas, fuentes))
+exports.default = series(mediaDir, parallel(imagenes, animadas/* , fuentes */))
+
+exports.imagenes = imagenes
 
 exports.watch = series(exports.default, function () {
   watch([animated, images], exports.default)

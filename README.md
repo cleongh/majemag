@@ -60,14 +60,12 @@ El fondo será oscuro (casi negro) para evitar emisiones muy exageradas.
 
 La paleta es "aurora" de [Lospec](https://lospec.com/palette-list/aurora)
 
-La fuente es ["Orange Kid"](http://typodermicfonts.com/orange-kid/)
+# Gracias
+
+- A @gjimenezUCM por el arte píxel UCM y GGJ
 
 # TODO
 
-- [x] Fuente
-- [x] Hacer que transición sea pixel art (o como en zelda)
-- [x] Textos
-- [ ] Comprobar que los jugadores se pintan los últimos
 - [ ] Animación palanca
 - [ ] Animación dragón
 - [ ] Animación morir dragón
@@ -75,17 +73,26 @@ La fuente es ["Orange Kid"](http://typodermicfonts.com/orange-kid/)
 - [ ] Animación luchador
 - [ ] Animación fantasma
 - [ ] Animación morir fantasma
-- [x] Que se vea el disparo aunque colisione encima
-- [ ] Mejorar el dibujo de puertas (marco)
-- [x] Solucionar y depurar la identificación de blobs
-- [ ] Arte UCM
-- [ ] Probar MLP
-- [ ] ¿Depurar cámara?
+- [ ] Animación fantasma
+- [ ] Imagen dragón vencido
+- [x] Arte UCM
+- [x] Arte GGJ
+- [x] Fuente
+- [x] Hacer que transición sea pixel art (o como en zelda)
+- [x] Textos
 - [x] Decidir y planear arte
 - [x] Hacer que los magos disparen mejor (más frecuencia o como sea)
 - [x] Motor de animaciones
 - [x] Tamaño de puertas y muros correspondientes
 - [x] Transiciones suaves entre pantallas
 - [x] Probabilidades de generación de habitaciones
+- [x] Que se vea el disparo aunque colisione encima
+- [x] Solucionar y depurar la identificación de blobs
+- [x] Comprobar que los jugadores se pintan los últimos
+
+## Opcional
+
+- [ ] Mejorar el dibujo de puertas (marco)
+- [ ] Depurar cámara
 
 

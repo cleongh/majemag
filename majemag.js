@@ -149,7 +149,7 @@ class Texto extends Entidad {
    * @param {number} [y]
    */
   constructor(habitacion, cadena, y) {
-    super(habitacion, 0, y, Habitacion.ancho, Texto.tamano)
+    super(habitacion, 0, y, Habitacion.ancho, Texto.tamano * 4)
     this.cadena = cadena
   }
 
@@ -170,7 +170,7 @@ class Titulo extends Texto {
    * @param {string} c
    */
   constructor(h, c) {
-    super(h, c, Habitacion.alto / 2 - Texto.tamano)
+    super(h, c, Habitacion.alto / 2 - Texto.tamano * 3)
   }
 }
 
@@ -180,17 +180,7 @@ class Subtitulo extends Texto {
    * @param {string} c
    */
   constructor(h, c) {
-    super(h, c, Habitacion.alto / 2)
-  }
-}
-
-class Info extends Texto {
-  /**
-   * @param {Habitacion} h
-   * @param {string} c
-   */
-  constructor(h, c) {
-    super(h, c, Habitacion.alto / 2 + Texto.tamano)
+    super(h, c, Habitacion.alto / 2 - Texto.tamano)
   }
 }
 
@@ -679,12 +669,6 @@ class Habitacion {
     this.anadirTexto(new Subtitulo(this, cadena))
   }
 
-  /**
-   * @param {string} cadena
-   */
-  info(cadena) {
-    this.anadirTexto(new Info(this, cadena))
-  }
 
   /**
    * @param {number} x
@@ -803,6 +787,14 @@ class Habitacion {
     /** @type {Transicion} */ this.transicion = null
 
     this.quedanParaLucha = quedan
+
+    const die = random()
+    if (die > 0.75) {
+      this.escudo = { img: imagenes.ucm, w: 87, h: 100 }
+    }
+    else if (die > 0.5) {
+      this.escudo = { img: imagenes.ggj, w: 100, h: 65 }
+    }
   }
 
   elegirHabitacion() {
@@ -882,6 +874,9 @@ class Habitacion {
 
   dibujar() {
     image(imagenes.plaza, 0, 0)
+    if (this.escudo) {
+      image(this.escudo.img, Habitacion.ancho / 2 - this.escudo.w / 2, 10 + Habitacion.alto / 2 - this.escudo.h / 2)
+    }
     for (const puerta of this.puertas.values()) {
       puerta.dibujar()
     }
@@ -965,7 +960,7 @@ class Habitacion {
   }
 }
 
-Habitacion.tipoLetra = undefined
+// Habitacion.tipoLetra = undefined
 Habitacion.minimasHastaLucha = 6
 Habitacion.anchoMuro = 10
 Habitacion.ancho = 192
@@ -989,9 +984,8 @@ class LuchaFinal extends Habitacion {
 
   limpiada() {
     this.desbloquearPuertas()
-    this.titulo('¡Has derrotado a Majemag!')
-    this.subtitulo('Dedícaselo a [@nombre] con')
-    this.info('@informaticaucm #GGJ20Madrid #GGJ20')
+    this.titulo('¡Tuitea una foto con tu victoria!')
+    this.subtitulo('Dedicado a [@nombre]\npor su ayuda\n#GGJ20Madrid #GGJ20 @informaticaucm')
   }
 }
 
@@ -1047,7 +1041,8 @@ function setup() {
   createCanvas(Habitacion.ancho, Habitacion.alto)
   noSmooth()
   textAlign(CENTER, CENTER)
-  textFont(Habitacion.tipoLetra)
+  // textFont(Habitacion.tipoLetra)
+  textFont('Trebuchet MS', 8)
 
   Texto.tamano = textAscent() + textDescent()
 
@@ -1083,7 +1078,7 @@ function f(nombre, ultimo, primero = 0) {
 function preload() {
   const url = 'media/user621461af90'
 
-  Habitacion.tipoLetra = loadFont(`${url}/tipoletra.ttf`)
+  // Habitacion.tipoLetra = loadFont(`${url}/tipoletra.ttf`)
   /**
    * @param {Enemigo} p
    */
@@ -1128,6 +1123,9 @@ function preload() {
     imagenes[png] = loadImage(`${url}/${png}.png`)
   }
   imagenes.plaza = loadImage(`${url}/plaza.img.png`)
+  imagenes.ucm = loadImage(`${url}/ucm.img.png`)
+  imagenes.ggj = loadImage(`${url}/ggj.img.png`)
+
 }
 
 // eslint-disable-next-line no-unused-vars
