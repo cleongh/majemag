@@ -66,14 +66,10 @@ La paleta es "aurora" de [Lospec](https://lospec.com/palette-list/aurora)
 
 # TODO
 
-- [ ] Animación palanca
 - [ ] Animación dragón
 - [ ] Animación morir dragón
 - [ ] Animación mago
 - [ ] Animación luchador
-- [ ] Animación fantasma
-- [ ] Animación morir fantasma
-- [ ] Animación fantasma
 - [ ] Imagen dragón vencido
 - [x] Arte UCM
 - [x] Arte GGJ
@@ -89,6 +85,11 @@ La paleta es "aurora" de [Lospec](https://lospec.com/palette-list/aurora)
 - [x] Que se vea el disparo aunque colisione encima
 - [x] Solucionar y depurar la identificación de blobs
 - [x] Comprobar que los jugadores se pintan los últimos
+- [x] Animación morir fantasma
+- [x] Animación fantasma
+- [x] Animación palanca
+
+
 
 ## Opcional
 
