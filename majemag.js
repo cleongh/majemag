@@ -281,12 +281,15 @@ class Enemigo extends EntidadAnimada {
 
   /** @return {boolean} */
   golpeado() {
-    this.vida -= 1 // dueno.nivel
-    const muerto = this.vida <= 0
-    if (muerto) {
-      this.animar(this.animacionMuerte)
+    if (this.vida > 0) {
+      this.vida -= 1 // dueno.nivel
+      const muerto = this.vida <= 0
+      if (muerto) {
+        this.animar(this.animacionMuerte)
+      }
+      return muerto
     }
-    return muerto
+    return true
   }
 }
 
@@ -471,7 +474,7 @@ class AbridorPuertas extends Pulsador {
 
 class GeneradorEnemigo extends Pulsador {
   pulsar() {
-    this.habitacion.algunosFantasmasRandom(1, 2)
+    this.habitacion.algunosFantasmasRandom(2, 6)
   }
 }
 
@@ -961,7 +964,7 @@ class Habitacion {
 }
 
 // Habitacion.tipoLetra = undefined
-Habitacion.minimasHastaLucha = 6
+Habitacion.minimasHastaLucha = 1
 Habitacion.anchoMuro = 10
 Habitacion.ancho = 192
 Habitacion.alto = 157
@@ -1027,7 +1030,7 @@ class FantasmasBloqueo extends Habitacion {
     super(personas, quedan - 1, ...Habitacion.subconjuntoMenos(desde))
     this.bloquearPuertas()
     this.abridorPuertas(Habitacion.ancho / 2 - Pulsador.anchoPulsador / 2, 100)
-    this.algunosFantasmasRandom(1, 2)
+    this.algunosFantasmasRandom(3, 5)
   }
 }
 
@@ -1091,9 +1094,9 @@ function preload() {
   }
 
   animaciones.lucha = { fotogramas: ['lucha.img'], periodo: 500, vuelta: true }
-  animaciones.fantasma = { fotogramas: ['fantasma.img'] }
+  animaciones.fantasma = { fotogramas: f('fantasma', 2), periodo: 500, vuelta: true }
   animaciones.fantasmaMuerto = {
-    fotogramas: ['fantasma.img', 'fantasma.img'],
+    fotogramas: f('fantasmamuerto', 10),
     periodo: 500,
     terminada: eliminaEnemigo
   }
@@ -1103,8 +1106,6 @@ function preload() {
     periodo: 500,
     terminada: eliminaEnemigo
   }
-
-
 
   animaciones.magia = { fotogramas: ['magia.img'], periodo: 450, vuelta: true }
   animaciones.puertaAbriendose = { fotogramas: f('puerta', 13), periodo: 250, terminada: p => { p.activa = true } }
@@ -1125,7 +1126,6 @@ function preload() {
   imagenes.plaza = loadImage(`${url}/plaza.img.png`)
   imagenes.ucm = loadImage(`${url}/ucm.img.png`)
   imagenes.ggj = loadImage(`${url}/ggj.img.png`)
-
 }
 
 // eslint-disable-next-line no-unused-vars
