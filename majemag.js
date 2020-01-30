@@ -488,7 +488,7 @@ class Dragon extends Enemigo {
 }
 
 Dragon.vida = 1 // 5 /* golpes */ * 3 /* personas */ * Persona.maximoNivel
-Dragon.largo = 100 // 48 + 36 // ancho tope más 2 mitados ancho 2º tope
+Dragon.largo = 74 // 48 + 36 // ancho tope más 2 mitados ancho 2º tope
 Dragon.ancho = 60 // floor(2 * 125 /* alto zona */ / 3)
 
 class Arma extends EntidadAnimada {
@@ -1102,7 +1102,7 @@ function preload() {
   }
 
   animaciones.dragonMuerto = {
-    fotogramas: ['dragon.img', 'dragon.img'],
+    fotogramas: ['dragon.ani.0000', 'dragon.ani.0000'],
     periodo: 500,
     terminada: eliminaEnemigo
   }
@@ -1117,7 +1117,7 @@ function preload() {
   animaciones.puerta = { fotogramas: ['puerta.ani.0000'] }
   animaciones.puertaAbierta = { fotogramas: ['puerta.ani.0012'] }
 
-  animaciones.dragon = { fotogramas: ['dragon.img'] }
+  animaciones.dragon = { fotogramas: f('dragon', 19), periodo: 750, vuelta: true }
 
   const pngs = Object.keys(animaciones).flatMap(k => animaciones[k].fotogramas)
   for (const png of pngs) {
