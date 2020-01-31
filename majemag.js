@@ -1122,39 +1122,39 @@ function preload() {
     }
   }
 
-  animaciones.lucha = { fotogramas: f('lucha', 2), periodo: 500, vuelta: true }
-  animaciones.fantasma = { fotogramas: f('fantasma', 2), periodo: 500, vuelta: true }
+  animaciones.lucha = { fotogramas: f('seg_final_lucha', 2), periodo: 500, vuelta: true }
+  animaciones.fantasma = { fotogramas: f('seg_final_fantasma', 2), periodo: 500, vuelta: true }
   animaciones.fantasmaMuerto = {
-    fotogramas: f('fantasmamuerto', 10),
+    fotogramas: f('seg_final_fantasmamuerto', 10),
     periodo: 500,
     terminada: eliminaEnemigo
   }
 
   animaciones.dragonMuerto = {
-    fotogramas: f('dragonmuerto', 18),
+    fotogramas: f('seg_final_dragonmuerto', 18),
     periodo: 500,
     terminada: eliminaEnemigo
   }
 
-  animaciones.magia = { fotogramas: f('magia', 2), periodo: 450, vuelta: true }
-  animaciones.puertaAbriendose = { fotogramas: f('puerta', 13), periodo: 250, terminada: p => { p.activa = true } }
-  animaciones.espada = { fotogramas: ['hacha.img'] }
-  animaciones.rayo = { fotogramas: f('rayo', 2), periodo: 125, vuelta: true }
-  animaciones.pulsador = { fotogramas: ['palanca.ani.0000'] }
-  animaciones.pulsadorPulsado = { fotogramas: f('palanca', 7), periodo: 200, terminada: p => p.pulsar() }
+  animaciones.magia = { fotogramas: f('seg_final_magia', 2), periodo: 450, vuelta: true }
+  animaciones.puertaAbriendose = { fotogramas: f('seg_final_puerta', 13), periodo: 250, terminada: p => { p.activa = true } }
+  animaciones.espada = { fotogramas: ['seg_final_hacha.img'] }
+  animaciones.rayo = { fotogramas: f('seg_final_rayo', 2), periodo: 125, vuelta: true }
+  animaciones.pulsador = { fotogramas: ['seg_final_palanca.ani.0000'] }
+  animaciones.pulsadorPulsado = { fotogramas: f('seg_final_palanca', 7), periodo: 200, terminada: p => p.pulsar() }
 
-  animaciones.puerta = { fotogramas: ['puerta.ani.0000'] }
-  animaciones.puertaAbierta = { fotogramas: ['puerta.ani.0012'] }
+  animaciones.puerta = { fotogramas: ['seg_final_puerta.ani.0000'] }
+  animaciones.puertaAbierta = { fotogramas: ['seg_final_puerta.ani.0012'] }
 
-  animaciones.dragon = { fotogramas: f('dragon', 19), periodo: 750, vuelta: true }
+  animaciones.dragon = { fotogramas: f('seg_final_dragon', 19), periodo: 750, vuelta: true }
 
   const pngs = Object.keys(animaciones).flatMap(k => animaciones[k].fotogramas)
   for (const png of pngs) {
     imagenes[png] = loadImage(`${url}/${png}.png`)
   }
-  imagenes.plaza = loadImage(`${url}/plaza.img.png`)
-  imagenes.ucm = loadImage(`${url}/ucm.img.png`)
-  imagenes.ggj = loadImage(`${url}/ggj.img.png`)
+  imagenes.plaza = loadImage(`${url}/seg_final_plaza.img.png`)
+  imagenes.ucm = loadImage(`${url}/seg_final_ucm.img.png`)
+  imagenes.ggj = loadImage(`${url}/seg_final_ggj.img.png`)
 }
 
 // eslint-disable-next-line no-unused-vars
