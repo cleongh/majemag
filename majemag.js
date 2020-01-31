@@ -441,7 +441,7 @@ class Magia extends Persona {
     this.habitacion.rayo(this.x + this.w / 2 - Rayo.ancho / 2, this.y + this.h / 2 - Rayo.ancho / 2)
   }
 }
-Magia.maxTiempoDisparo = 4500
+Magia.maxTiempoDisparo = 5000
 
 class Lucha extends Persona {
   /**
@@ -662,7 +662,7 @@ class Habitacion {
    * @param {number} cuantos
    */
   fantasmasRandom(cuantos = 1) {
-    for (let i = 0; i < cuantos; i++) {
+    for (let i = 0; i < cuantos + this.personas.size; i++) {
       const { x, y } = Habitacion.posicionAleatoria()
       this.fantasma(x, y)
     }
@@ -889,16 +889,13 @@ class Habitacion {
     function smaller(a, b) { return a <= b }
     const c = this.transicion.entrando ? bigger : smaller
 
-    const maxPuntos = Habitacion.ancho * Habitacion.alto / a * a
+    const maxPuntos = Habitacion.ancho * Habitacion.alto // / a * a
     let i = 0
     for (let x = 0; x < Habitacion.ancho; x += a) {
       for (let y = 0; y < Habitacion.alto; y += a) {
         i += a
-        // if (c(random(), p)) {
-        if (i < maxPuntos) {
-          if (c(i, p)) {
-            rect(x, y, a, a)
-          }
+        if (c(i / maxPuntos, p)) {
+          rect(x, y, a, a)
         }
       }
     }
@@ -927,7 +924,7 @@ class Habitacion {
       persona.dibujar()
     }
     if (this.transicion) {
-      this.transicionPixel(this.transicion.porcentaje / Habitacion.tiempoTransicion)
+      this.transicionFade(this.transicion.porcentaje / Habitacion.tiempoTransicion)
     }
     // Para que salgan siempre encima
     for (const texto of this.textos.values()) {
