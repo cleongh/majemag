@@ -216,7 +216,7 @@ class Puerta extends EntidadAnimada {
 }
 
 Puerta.anchoPuerta = 18
-Puerta.altoPuerta = 10
+Puerta.altoPuerta = 23
 Puerta.maxTiempoSalida = 2000
 
 class Izquierda extends Puerta {
@@ -277,6 +277,7 @@ class Enemigo extends EntidadAnimada {
     this.vida = vida
     this.experiencia = this.vida
     this.animacionMuerte = animacionMuerte
+    this.animacionGolpe = 0
   }
 
   /** @return {boolean} */
@@ -287,11 +288,28 @@ class Enemigo extends EntidadAnimada {
       if (muerto) {
         this.animar(this.animacionMuerte)
       }
+      else {
+        this.animacionGolpe = Enemigo.tiempoGolpe
+      }
       return muerto
     }
     return true
   }
+
+  dibujar(x = this.x, y = this.y) {
+    if (this.animacionGolpe > 0) {
+      tint(191, 63, 63, 127 + 128 * (Enemigo.tiempoGolpe - this.animacionGolpe) / Enemigo.tiempoGolpe)
+      super.dibujar(x, y)
+      tint(255, 255)
+      this.animacionGolpe -= delta()
+    }
+    else {
+      super.dibujar(x, y)
+    }
+  }
 }
+
+Enemigo.tiempoGolpe = 1000
 
 class Fantasma extends Enemigo {
   /**
@@ -337,11 +355,13 @@ class Persona extends EntidadAnimada {
    * @param {number} y
    * @param {string} animacion
    * @param {number} id
+   * @param {number} maxTiempoDisparo
    */
-  constructor(id, habitacion, animacion, x, y) {
+  constructor(id, habitacion, animacion, x, y, maxTiempoDisparo) {
     super(habitacion, animacion, x, y, Persona.tamanoPersona)
     this.id = id
-    this.tiempoDisparo = random(Persona.maxTiempoDisparo)
+    this.maxTiempoDisparo = maxTiempoDisparo
+    this.tiempoDisparo = random(this.maxTiempoDisparo)
     this.direccion = random(TWO_PI)
   }
 
@@ -362,7 +382,7 @@ class Persona extends EntidadAnimada {
     if (this.habitacion.enemigos.size > 0) {
       this.tiempoDisparo += delta()
 
-      if (this.tiempoDisparo >= Persona.maxTiempoDisparo) {
+      if (this.tiempoDisparo >= this.maxTiempoDisparo) {
         this.disparar()
         this.tiempoDisparo = 0
       }
@@ -401,7 +421,7 @@ class Persona extends EntidadAnimada {
 }
 
 
-Persona.maxTiempoDisparo = 3000
+// Persona.maxTiempoDisparo = 3000
 Persona.maximoNivel = 3
 Persona.tamanoPersona = tamanoSprite
 Persona.distanciaReconocimento = 10
@@ -414,13 +434,14 @@ class Magia extends Persona {
    * @param {number} id
    */
   constructor(id, habitacion, x, y) {
-    super(id, habitacion, 'magia', x, y)
+    super(id, habitacion, 'magia', x, y, Magia.maxTiempoDisparo)
   }
 
   disparar() {
     this.habitacion.rayo(this.x + this.w / 2 - Rayo.ancho / 2, this.y + this.h / 2 - Rayo.ancho / 2)
   }
 }
+Magia.maxTiempoDisparo = 4500
 
 class Lucha extends Persona {
   /**
@@ -430,7 +451,7 @@ class Lucha extends Persona {
    * @param {number} id
    */
   constructor(id, habitacion, x, y) {
-    super(id, habitacion, 'lucha', x, y)
+    super(id, habitacion, 'lucha', x, y, Lucha.maxTiempoDisparo)
 
   }
 
@@ -442,6 +463,9 @@ class Lucha extends Persona {
     return { x: this.x + this.w / 2 - Espada.radioEspada / 2, y: this.y + this.h / 2 - Espada.radioEspada / 2 }
   }
 }
+
+Lucha.maxTiempoDisparo = 2500
+
 
 class Pulsador extends EntidadAnimada {
   /**
@@ -487,7 +511,7 @@ class Dragon extends Enemigo {
   }
 }
 
-Dragon.vida = 1 // 5 /* golpes */ * 3 /* personas */ * Persona.maximoNivel
+Dragon.vida = 15 // 5 /* golpes */ * 3 /* personas */ * Persona.maximoNivel
 Dragon.largo = 74 // 48 + 36 // ancho tope más 2 mitados ancho 2º tope
 Dragon.ancho = 60 // floor(2 * 125 /* alto zona */ / 3)
 
@@ -533,7 +557,7 @@ class Arma extends EntidadAnimada {
   }
 }
 
-Arma.tiempoDesvanecimiento = 250
+Arma.tiempoDesvanecimiento = 400
 
 class Espada extends Arma {
   /**
@@ -864,10 +888,17 @@ class Habitacion {
     function bigger(a, b) { return a > b }
     function smaller(a, b) { return a <= b }
     const c = this.transicion.entrando ? bigger : smaller
+
+    const maxPuntos = Habitacion.ancho * Habitacion.alto / a * a
+    let i = 0
     for (let x = 0; x < Habitacion.ancho; x += a) {
       for (let y = 0; y < Habitacion.alto; y += a) {
-        if (c(random(), p)) {
-          rect(x, y, a, a)
+        i += a
+        // if (c(random(), p)) {
+        if (i < maxPuntos) {
+          if (c(i, p)) {
+            rect(x, y, a, a)
+          }
         }
       }
     }
@@ -1006,9 +1037,10 @@ class PulsadorFantasma extends Habitacion {
 
 class FantasmasLimpieza extends Habitacion {
   /**
-    * @param {TipoPuertaConcreta} desde
-    * @param {Set<Persona>} personas 
-     */
+   * @param {TipoPuertaConcreta} desde
+   * @param {Set<Persona>} personas
+   * @param {number} quedan
+   */
   constructor(personas, quedan, desde) {
     super(personas, quedan - 1, ...Habitacion.subconjuntoMenos(desde))
     this.bloquearPuertas()
@@ -1052,8 +1084,8 @@ function setup() {
   // @ts-ignore
   api.tracking.connect()
 
-  // Habitacion.habitacionActual = new (random(Habitacion.habitacionesMedio))(10) //  new LuchaFinal()
-  Habitacion.habitacionActual = new LuchaFinal(new Set())
+  Habitacion.habitacionActual = new (random(Habitacion.habitacionesMedio))(new Set(), 10) //  new LuchaFinal()
+  // Habitacion.habitacionActual = new LuchaFinal(new Set())
 }
 
 const imagenes = {}
@@ -1093,7 +1125,7 @@ function preload() {
     }
   }
 
-  animaciones.lucha = { fotogramas: ['lucha.img'], periodo: 500, vuelta: true }
+  animaciones.lucha = { fotogramas: f('lucha', 2), periodo: 500, vuelta: true }
   animaciones.fantasma = { fotogramas: f('fantasma', 2), periodo: 500, vuelta: true }
   animaciones.fantasmaMuerto = {
     fotogramas: f('fantasmamuerto', 10),
@@ -1102,12 +1134,12 @@ function preload() {
   }
 
   animaciones.dragonMuerto = {
-    fotogramas: ['dragon.ani.0000', 'dragon.ani.0000'],
+    fotogramas: f('dragonmuerto', 18),
     periodo: 500,
     terminada: eliminaEnemigo
   }
 
-  animaciones.magia = { fotogramas: ['magia.img'], periodo: 450, vuelta: true }
+  animaciones.magia = { fotogramas: f('magia', 2), periodo: 450, vuelta: true }
   animaciones.puertaAbriendose = { fotogramas: f('puerta', 13), periodo: 250, terminada: p => { p.activa = true } }
   animaciones.espada = { fotogramas: ['hacha.img'] }
   animaciones.rayo = { fotogramas: f('rayo', 2), periodo: 125, vuelta: true }

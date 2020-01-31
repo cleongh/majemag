@@ -63,14 +63,14 @@ La paleta es "aurora" de [Lospec](https://lospec.com/palette-list/aurora)
 # Gracias
 
 - A @gjimenezUCM por el arte píxel UCM y GGJ
+- A @ppgm y @gjimenezUCM por revisión e ideas
 
 # TODO
 
-- [ ] Animación dragón
-- [ ] Animación morir dragón
-- [ ] Animación mago
-- [ ] Animación luchador
-- [ ] Imagen dragón vencido
+- [x] Animación dragón
+- [x] Animación morir dragón
+- [x] Animación mago
+- [x] Animación luchador
 - [x] Arte UCM
 - [x] Arte GGJ
 - [x] Fuente
